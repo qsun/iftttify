@@ -10,7 +10,7 @@ module Iftttify
     methodName = r["methodCall"]["methodName"]
 
     if methodName == 'mt.supportedMethods'
-      'metaWeblog.getRecentPosts'
+      '<array><data><value><string>metaWeblog.getRecentPosts</string></value></data></array>'
     elsif methodName == 'metaWeblog.getRecentPosts'
       '<array><data></data></array>'
     elsif methodName == 'metaWeblog.newPost'
