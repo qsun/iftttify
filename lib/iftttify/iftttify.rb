@@ -10,7 +10,7 @@ module Iftttify
     methodName = r["methodCall"]["methodName"]
 
     if methodName == 'mt.supportedMethods'
-      '<array><data><value><string>metaWeblog.getRecentPosts</string></value></data></array>'
+      'metaWeblog.getRecentPosts'
     elsif methodName == 'metaWeblog.getRecentPosts'
       '<array><data></data></array>'
     elsif methodName == 'metaWeblog.newPost'
@@ -58,7 +58,7 @@ module Iftttify
               send(options[:with], post)
             end
 
-            render text: "<?xml version=\"1.0\"?><methodResponse><params><param><value>#{response}</value></param></params></methodResponse>", content_type: 'application/xml'
+            render text: "<?xml version=\"1.0\"?><methodResponse><params><param><value>#{response}</value></param></params></methodResponse>", content_type: 'text/xml'
           rescue Iftttify::Exceptions::InvalidCredential => e
             render text: 'invalid credential', status: :unauthorized
           end
