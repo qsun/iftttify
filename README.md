@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/qsun/iftttify.svg?branch=master)](https://travis-ci.org/qsun/iftttify)
+[![Gem Version](https://badge.fury.io/rb/iftttify.svg)](http://badge.fury.io/rb/iftttify)
 
 
 # iftttify
