@@ -1,10 +1,9 @@
 require 'ostruct'
 
 module Iftttify
-  Post = Struct.new :blog_name, :username, :password, :title, :body
-  
-  def self.process(request, options, &block)
-    
+  def self.process(request, options)
+    post = Struct.new :blog_name, :username, :password, :title, :body
+      
     r = Hash.from_xml(request.body.read)
     
     methodName = r["methodCall"]["methodName"]
@@ -18,14 +17,13 @@ module Iftttify
       password = r["methodCall"]["params"]["param"][2]["value"]["string"]
       if !options[:auth] || (options[:auth][:username] == username) && (options[:auth][:password] == password)
         h = Iftttify::members_to_hash(r["methodCall"]["params"]["param"][3]["value"]["struct"]["member"])
-        result = block.call Post.new(
-                                     r["methodCall"]["params"]["param"][0]["value"]["string"],
-                                     username,
-                                     password,
-                                     h[:title],
-                                     h[:description]
-                                     )
-        result
+        yield post.new(
+                       r["methodCall"]["params"]["param"][0]["value"]["string"],
+                       username,
+                       password,
+                       h[:title],
+                       h[:description]
+                       )
       else
         raise Iftttify::Exceptions::InvalidCredential, "Failed to verify credential provided: [#{username}] with [#{password}]"
       end
